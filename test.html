@@ -1,0 +1,28 @@
+<html>
+    <input id='inputID'></input>
+    <button onclick='buttonClicked()'>CLICK HERE</button>
+    <script>
+        var button;
+        var websock;
+        var input;
+        window.onload = function(){
+            input = document.getElementById("inputID");
+            websock = new WebSocket("ws://localhost:8080");
+            websock.onopen = function(evt) { 
+                console.log("Connection Open");
+            };
+            websock.onclose = function(evt) { 
+                console.log("Connection Closed");
+            };
+            websock.onmessage = function(evt) { 
+                console.log(evt.data);
+            };
+            websock.onerror = function(evt) { 
+                console.log(evt.data);
+            };
+        }
+        function buttonClicked(){
+           websock.send(new Int8Array([input.value]));
+        }
+    </script>
+</html>
